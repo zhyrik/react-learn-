@@ -9,20 +9,42 @@ class App extends Component {
       {name: 'ZAZ', year: 2000},
       {name: 'Audi', year: 2018},
       {name: 'Audi', year: 2012}
-    ]
+    ],
+    title: 'Hello World!',
+    flag: true
+  }
+
+  newTitle = (title) => {
+    this.setState({
+      title
+    })
+  }
+
+  changeFlag = () => {
+    this.setState({flag: !this.state.flag})
+  }
+
+  inputTitle = (event) => {
+    this.setState({
+      title: event.target.value
+    })
   }
 
   render() {
-    const cars = this.state.cars
     return (
       <div className="App">
-        <h1 style={{color: 'red', textTransform: 'uppercase'}}>Hello world!</h1>
-        <Car name={cars[0].name} year={cars[0].year} />
-        <Car name={cars[1].name} year={cars[1].year} />
-        <Car name={cars[2].name} year={cars[2].year} />
+        <h1 style={{color: 'red', textTransform: 'uppercase'}}>{this.state.title}</h1>
+        <input type="text" onChange={this.inputTitle} />
+        <button onClick={this.changeFlag}>Change</button>
+        {this.state.flag ? 
+          this.state.cars.map((car, index) => {
+            return <Car name={car.name} year={car.year} func={this.newTitle.bind(this, car.name)} key={index} />
+          })
+          : null
+        }
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
